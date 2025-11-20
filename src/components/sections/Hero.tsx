@@ -3,6 +3,28 @@ import { ChatbotCard } from '../hero/ChatbotCard';
 import { FloatingIcons } from '../hero/FloatingIcons';
 import { AnimatedAIText } from '../hero/AnimatedAIText';
 import { ScrollReveal } from '../ui/ScrollReveal';
+import { cn } from '../../utils/cn';
+
+const heroHighlights = [
+    {
+        icon: '📊',
+        label: 'Track ranking',
+        textGradient: 'from-neon-violet to-neon-purple',
+        borderStyles: 'border-neon-violet/30 hover:border-neon-violet/60 hover:shadow-purple-glow',
+    },
+    {
+        icon: '🤝',
+        label: 'More Deals',
+        textGradient: 'from-electric-blue to-bright-cyan',
+        borderStyles: 'border-electric-blue/30 hover:border-electric-blue/60 hover:shadow-cyan-glow',
+    },
+    {
+        icon: '💰',
+        label: 'More profit',
+        textGradient: 'from-bright-cyan to-aqua-neon',
+        borderStyles: 'border-bright-cyan/30 hover:border-bright-cyan/60 hover:shadow-cyan-glow',
+    },
+] as const;
 
 export const Hero = () => {
     return (
@@ -43,19 +65,27 @@ export const Hero = () => {
                         </ScrollReveal>
 
                         <ScrollReveal delay={0.4}>
-                            <div className="flex items-center gap-2 max-w-2xl">
-                                <div className="glass-card px-3 py-1.5 rounded-xl border-2 border-neon-violet/30 hover:border-neon-violet/60 transition-all hover:shadow-purple-glow flex items-center gap-1.5">
-                                    <span className="text-lg">📊</span>
-                                    <p className="text-sm md:text-base font-semibold bg-gradient-to-r from-neon-violet to-neon-purple bg-clip-text text-transparent whitespace-nowrap">Track ranking</p>
-                                </div>
-                                <div className="glass-card px-3 py-1.5 rounded-xl border-2 border-electric-blue/30 hover:border-electric-blue/60 transition-all hover:shadow-cyan-glow flex items-center gap-1.5">
-                                    <span className="text-lg">🤝</span>
-                                    <p className="text-sm md:text-base font-semibold bg-gradient-to-r from-electric-blue to-bright-cyan bg-clip-text text-transparent whitespace-nowrap">More Deals</p>
-                                </div>
-                                <div className="glass-card px-3 py-1.5 rounded-xl border-2 border-bright-cyan/30 hover:border-bright-cyan/60 transition-all hover:shadow-cyan-glow flex items-center gap-1.5">
-                                    <span className="text-lg">💰</span>
-                                    <p className="text-sm md:text-base font-semibold bg-gradient-to-r from-bright-cyan to-aqua-neon bg-clip-text text-transparent whitespace-nowrap">More profit</p>
-                                </div>
+                            <div className="grid w-full max-w-md grid-cols-2 gap-3 md:max-w-2xl md:flex md:flex-nowrap md:items-center md:gap-2">
+                                {heroHighlights.map((highlight, index) => (
+                                    <div
+                                        key={highlight.label}
+                                        className={cn(
+                                            'glass-card flex items-center gap-1.5 rounded-xl border-2 px-3 py-1.5 transition-all w-full',
+                                            highlight.borderStyles,
+                                            index === heroHighlights.length - 1 && 'col-span-2 md:col-span-1'
+                                        )}
+                                    >
+                                        <span className="text-lg">{highlight.icon}</span>
+                                        <p
+                                            className={cn(
+                                                'text-sm md:text-base font-semibold bg-gradient-to-r bg-clip-text text-transparent whitespace-nowrap',
+                                                highlight.textGradient
+                                            )}
+                                        >
+                                            {highlight.label}
+                                        </p>
+                                    </div>
+                                ))}
                             </div>
                         </ScrollReveal>
                     </div>
