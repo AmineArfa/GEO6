@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 
 export const LogoCarousel: React.FC = () => {
     const [logos, setLogos] = useState<string[]>([]);
-    const [loadedLogos, setLoadedLogos] = useState<string[]>([]);
 
     useEffect(() => {
         // List of all customer logos in /public/customer folder
@@ -27,36 +26,10 @@ export const LogoCarousel: React.FC = () => {
         ];
         
         setLogos(logoList);
-        
-        // Preload logos and filter out any that fail to load
-        const preloadLogos = async () => {
-            const validLogos: string[] = [];
-            
-            await Promise.all(
-                logoList.map((logo) => {
-                    return new Promise<void>((resolve) => {
-                        const img = new Image();
-                        img.onload = () => {
-                            validLogos.push(logo);
-                            resolve();
-                        };
-                        img.onerror = () => {
-                            // Silently skip broken images
-                            resolve();
-                        };
-                        img.src = logo;
-                    });
-                })
-            );
-            
-            setLoadedLogos(validLogos);
-        };
-        
-        preloadLogos();
     }, []);
 
-    // Use loaded logos, fallback to all logos if preloading hasn't completed
-    const logosToUse = loadedLogos.length > 0 ? loadedLogos : logos;
+    // Use logos directly
+    const logosToUse = logos;
     
     // Duplicate logos multiple times for seamless infinite scroll
     const duplicatedLogos = [...logosToUse, ...logosToUse, ...logosToUse];
@@ -65,11 +38,6 @@ export const LogoCarousel: React.FC = () => {
         return (
             <section className="py-12 bg-transparent relative overflow-hidden">
                 <div className="relative">
-                    {/* Left gradient */}
-                    <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-white via-white/80 to-transparent z-10 pointer-events-none" />
-                    {/* Right gradient */}
-                    <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-white via-white/80 to-transparent z-10 pointer-events-none" />
-                    
                     <div className="flex items-center justify-center gap-16 px-8">
                         <div className="h-12 w-32 bg-gray-200 rounded animate-pulse" />
                         <div className="h-12 w-32 bg-gray-200 rounded animate-pulse" />
@@ -83,11 +51,6 @@ export const LogoCarousel: React.FC = () => {
     return (
         <section className="py-12 bg-transparent relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-6 md:px-12 w-full relative">
-                {/* Left gradient */}
-                <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-white via-white/80 to-transparent z-10 pointer-events-none" />
-                {/* Right gradient */}
-                <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-white via-white/80 to-transparent z-10 pointer-events-none" />
-                
                 <div className="carousel-container">
                     <div className="carousel-track">
                         {duplicatedLogos.map((logo, index) => (
@@ -148,4 +111,3 @@ export const LogoCarousel: React.FC = () => {
         </section>
     );
 };
-
