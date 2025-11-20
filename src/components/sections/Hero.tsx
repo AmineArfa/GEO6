@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { MetricsCard } from '../hero/MetricsCard';
 import { ChatbotCard } from '../hero/ChatbotCard';
 import { FloatingIcons } from '../hero/FloatingIcons';

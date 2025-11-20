@@ -1,7 +1,6 @@
 import { Header } from './components/layout/Header';
 import { Hero } from './components/sections/Hero';
 import { LogoCarousel } from './components/sections/LogoCarousel';
-import { AIVisibility } from './components/sections/AIVisibility';
 import { AnimatedBackground } from './components/layout/AnimatedBackground';
 
 function App() {
@@ -12,7 +11,6 @@ function App() {
         <Header />
         <Hero />
         <LogoCarousel />
-        <AIVisibility />
       </div>
     </div>
   );
